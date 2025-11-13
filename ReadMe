@@ -1,1 +1,172 @@
-Let's understand probot hopefully.
+# Probot Trials
+
+A learning repository for understanding and experimenting with [Probot](https://probot.github.io/), GitHub's framework for building GitHub Apps.
+
+## About
+
+This repository serves as a hands-on environment for exploring Probot's capabilities and learning how to build powerful GitHub Apps that can automate workflows, improve development processes, and enhance collaboration.
+
+## What is Probot?
+
+Probot is a framework built on top of [GitHub Apps](https://docs.github.com/en/developers/apps) that makes it easy to build bots and automation tools for GitHub. With Probot, you can:
+
+- Automate repetitive tasks
+- Enforce best practices
+- Respond to GitHub events (issues, pull requests, commits, etc.)
+- Integrate with external services
+- Build custom workflows
+
+## Prerequisites
+
+Before getting started with Probot, you should have:
+
+- **Node.js** (version 18 or higher recommended)
+- **npm** or **yarn** package manager
+- A **GitHub account**
+- Basic knowledge of JavaScript/TypeScript
+- Familiarity with GitHub's features (issues, PRs, etc.)
+
+## Getting Started
+
+### 1. Install Probot
+
+```bash
+# Using npm
+npm install -g probot
+
+# Or using npx (no installation required)
+npx create-probot-app my-first-app
+```
+
+### 2. Create Your First App
+
+```bash
+# Create a new Probot app
+npx create-probot-app my-first-app
+
+# Navigate to the app directory
+cd my-first-app
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm start
+```
+
+### 3. Configure GitHub App
+
+Follow the setup instructions in your terminal to:
+1. Register a new GitHub App
+2. Configure webhook URL (use [smee.io](https://smee.io/) for local development)
+3. Set up app permissions and events
+
+## Project Structure
+
+```
+probot-app/
+├── src/
+│   └── index.ts          # Main app logic
+├── test/
+│   └── index.test.ts     # Tests for your app
+├── .env.example          # Environment variables template
+├── package.json          # Dependencies and scripts
+└── README.md            # Documentation
+```
+
+## Key Concepts
+
+### Webhooks
+Probot apps listen to GitHub webhook events like:
+- `issues.opened` - When an issue is created
+- `pull_request.opened` - When a PR is created
+- `push` - When code is pushed
+- And many more!
+
+### Event Handlers
+Your app responds to events using handlers:
+
+```javascript
+module.exports = (app) => {
+  app.on('issues.opened', async (context) => {
+    // Your automation logic here
+    const issueComment = context.issue({
+      body: 'Thanks for opening this issue!'
+    })
+    return context.octokit.issues.createComment(issueComment)
+  })
+}
+```
+
+### Context Object
+The `context` object provides:
+- Access to the webhook payload
+- GitHub API client (`context.octokit`)
+- Helper methods for common operations
+- Logging capabilities
+
+## Useful Resources
+
+- **Official Documentation**: https://probot.github.io/docs/
+- **API Reference**: https://probot.github.io/api/latest/
+- **Example Apps**: https://probot.github.io/apps/
+- **GitHub Apps Documentation**: https://docs.github.com/en/apps
+- **Community**: https://github.com/probot/probot/discussions
+
+## Popular Probot Apps
+
+Learn from existing apps:
+- **Stale** - Closes abandoned issues and PRs
+- **WIP** - Prevents merging of work-in-progress PRs
+- **Request Info** - Requests more info on issues and PRs
+- **Auto Comment** - Automatically comments on new issues/PRs
+- **Settings** - Syncs repository settings from a config file
+
+## Learning Path
+
+1. **Start Simple**: Create a bot that comments on new issues
+2. **Add Complexity**: Handle multiple event types
+3. **Use Context**: Access issue/PR data from the payload
+4. **API Interactions**: Use `context.octokit` to interact with GitHub
+5. **Testing**: Write tests for your event handlers
+6. **Deployment**: Deploy your app to a hosting platform
+
+## Testing
+
+```bash
+# Run tests
+npm test
+
+# Run tests in watch mode
+npm run test:watch
+
+# Check coverage
+npm run test:coverage
+```
+
+## Deployment
+
+Deploy your Probot app to:
+- **Vercel** - Serverless deployment
+- **Heroku** - Traditional hosting
+- **AWS Lambda** - Serverless functions
+- **Glitch** - Quick prototyping
+- **Self-hosted** - Your own infrastructure
+
+## Contributing
+
+This is a personal learning repository, but feel free to fork it and use it as a starting point for your own Probot experiments!
+
+## License
+
+MIT
+
+## Notes
+
+This repository is for educational purposes and experimentation with Probot. As you learn and build, remember to:
+- Keep your `.env` file secure (never commit it!)
+- Test your apps thoroughly before deploying
+- Follow GitHub's best practices for Apps
+- Respect rate limits and API usage guidelines
+
+Happy building! 🤖
